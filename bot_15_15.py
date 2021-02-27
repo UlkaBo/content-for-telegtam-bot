@@ -34,7 +34,7 @@ def start(update, context):
             [InlineKeyboardButton("Кафедра КМАД", callback_data = "kafedra_KMAD")],
             [InlineKeyboardButton("Можливості для студентів", callback_data = "moglyv_stud")],
             [InlineKeyboardButton("Умови вступу", callback_data = "umovy_vstypy")],
-        ]
+    ]
     reply = InlineKeyboardMarkup(kb_start)
     update.message.reply_text("Привіт! \
                     Цей чат-бот допоможе тобі познайомитися з ", reply_markup = reply)
