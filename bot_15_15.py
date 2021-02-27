@@ -81,6 +81,17 @@ def moglyv_stud(update, context):
 def umovy_vstypy(update, context):
     update.callback_query.message.reply_text('Обери підпункт, який тобі цікавиий ')
     
+def vikladachi(update, context):
+    update.callback_query.message.reply_text('')
+def principi(update, context):
+    update.callback_query.message.reply_text('')
+def istoriyaKafedry(update, context):
+    update.callback_query.message.reply_text('')
+def auditoryua(update, context):
+    update.callback_query.message.reply_text('')
+def vipuskniki(update, context):
+    update.callback_query.message.reply_text('')
+    
 def main():
 
     updater = Updater("1622026876:AAGSPO1cWixVtEb0Zw8PKJxNa-KfQUh7818", use_context=True)
@@ -92,6 +103,12 @@ def main():
     dp.add_handler(CallbackQueryHandler(kafedra_KMAD, pattern = 'kafedra_KMAD'))
     dp.add_handler(CallbackQueryHandler(moglyv_stud, pattern = 'moglyv_stud'))
     dp.add_handler(CallbackQueryHandler(umovy_vstypy, pattern = 'umovy_vstypy'))
+    
+    dp.add_handler(CallbackQueryHandler(vikladachi , pattern = "vikladachi"))
+    dp.add_handler(CallbackQueryHandler(principi , pattern = "principi"))
+    dp.add_handler(CallbackQueryHandler(istoriyaKafedry , pattern = "istoriyaKafedry"))
+    dp.add_handler(CallbackQueryHandler(auditoryua , pattern = "auditoryua"))
+    dp.add_handler(CallbackQueryHandler(vipuskniki , pattern = "vipuskniki"))
 
     dp.add_handler(MessageHandler(Filters.text, echo))
 
