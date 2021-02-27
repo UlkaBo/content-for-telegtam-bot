@@ -79,7 +79,6 @@ def moglyv_stud(update, context):
                              [InlineKeyboardButton("Практика",callback_data = "")]
 ]
 def umovy_vstypy(update, context):
-    update.callback_query.message.reply_text('Обери підпункт, який тобі цікавиий ')
     kb_start = [
             [InlineKeyboardButton("Конкурсні предмети ЗНО", callback_data = "")],
             [InlineKeyboardButton("Розрахунок конкурсного балу", callback_data = "")],
@@ -88,6 +87,7 @@ def umovy_vstypy(update, context):
             [InlineKeyboardButton("Кількість бюджетних та контрактних місць для вступників", callback_data = "")],
         ]
     reply = InlineKeyboardMarkup(kb_start)
+    update.callback_query.message.reply_text('Обери підпункт, який тобі цікавиий ', reply_markup = reply1)
     
 def vikladachi(update, context):
     update.callback_query.message.reply_text('')
