@@ -73,6 +73,11 @@ def kadedra_KMAD(update, context):
     update.callback_query.message.reply_photo(url_photo)
 def moglyv_stud(update, context):
     update.callback_query.message.reply_text('У нас є багато цікавих можливостей для студентів. З чого почнемо?  ')
+    kb_moglyv_stud=[[InlineKeyboardButton("Проєктне навчання(в сториз“проєкти”)",callback_data = "")],
+                             [InlineKeyboardButton("Дуальна освіта",callback_data = "")],
+                             [InlineKeyboardButton("Працевлаштування",callback_data = "")]
+                             [InlineKeyboardButton("Практика",callback_data = "")]
+]
 def umovy_vstypy(update, context):
     update.callback_query.message.reply_text('Обери підпункт, який тобі цікавиий ')
     
