@@ -53,9 +53,19 @@ def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
     
-def kafedra_KMAD(update, context):
-    print(update)
-    update.callback_query.message.reply_text('З чого почнемо? ')
+def kadedra_KMAD(update, context):
+    
+    kb_kafedra =[
+        
+        [InlineKeyboardButton('Викладачі',callback_data = '')],
+        [InlineKeyboardButton('Принципи навчання на кафедрі ',callback_data = '')],
+        [InlineKeyboardButton('Історія кафедри ',callback_data = '')],
+        [InlineKeyboardButton('Аудиторії кафедри',callback_data = '')],
+        [InlineKeyboardButton('Наші випускники',callback_data = '')]
+        ]
+    
+    reply1 = InlineKeyboardMarkup(kb_kafedra)
+    update.callback_query.message.reply_text('З чого почнемо? ',reply_markup = reply1)
     url_photo = "https://picsum.photos/id/1084/536/354?grayscale"
     print(update.callback_query.message.chat.id )
     #update.callback_query.message.bot.send_photo(chat_id =update.callback_query.message.chat.id , photo = url_photo)
