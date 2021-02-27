@@ -57,11 +57,11 @@ def kadedra_KMAD(update, context):
     
     kb_kafedra =[
         
-        [InlineKeyboardButton('Викладачі',callback_data = 'vikladachi')],
-        [InlineKeyboardButton('Принципи навчання на кафедрі ',callback_data = 'principi')],
-        [InlineKeyboardButton('Історія кафедри ',callback_data = 'istoriyaKafedry')],
-        [InlineKeyboardButton('Аудиторії кафедри',callback_data = 'auditoryua')],
-        [InlineKeyboardButton('Наші випускники',callback_data = 'vipuskniki')]
+        [InlineKeyboardButton('Викладачі',callback_data = '')],
+        [InlineKeyboardButton('Принципи навчання на кафедрі ',callback_data = '')],
+        [InlineKeyboardButton('Історія кафедри ',callback_data = '')],
+        [InlineKeyboardButton('Аудиторії кафедри',callback_data = '')],
+        [InlineKeyboardButton('Наші випускники',callback_data = '')]
         ]
     
     reply1 = InlineKeyboardMarkup(kb_kafedra)
@@ -78,16 +78,10 @@ def moglyv_stud(update, context):
                              [InlineKeyboardButton("Працевлаштування",callback_data = "")]
                              [InlineKeyboardButton("Практика",callback_data = "")]
 ]
+    reply2 = InlineKeyboardMarkup(kb_moglyv_stud)
+    update.callback_query.message.reply_text('У нас є багато цікавих можливостей для студентів. З чого почнемо?  ',reply_markup = reply2)
 def umovy_vstypy(update, context):
-    kb_start = [
-            [InlineKeyboardButton("Конкурсні предмети ЗНО", callback_data = "")],
-            [InlineKeyboardButton("Розрахунок конкурсного балу", callback_data = "")],
-            [InlineKeyboardButton("Етапи вступної кампанії", callback_data = "")],
-            [InlineKeyboardButton("Корисні посилання", callback_data = "")],
-            [InlineKeyboardButton("Кількість бюджетних та контрактних місць для вступників", callback_data = "")],
-        ]
-    reply = InlineKeyboardMarkup(kb_start)
-    update.callback_query.message.reply_text('Обери підпункт, який тобі цікавиий ', reply_markup = reply1)
+    update.callback_query.message.reply_text('Обери підпункт, який тобі цікавиий ')
     
 def vikladachi(update, context):
     update.callback_query.message.reply_text('')
