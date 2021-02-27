@@ -57,11 +57,11 @@ def kadedra_KMAD(update, context):
     
     kb_kafedra =[
         
-        [InlineKeyboardButton('Викладачі',callback_data = '')],
-        [InlineKeyboardButton('Принципи навчання на кафедрі ',callback_data = '')],
-        [InlineKeyboardButton('Історія кафедри ',callback_data = '')],
-        [InlineKeyboardButton('Аудиторії кафедри',callback_data = '')],
-        [InlineKeyboardButton('Наші випускники',callback_data = '')]
+        [InlineKeyboardButton('Викладачі',callback_data = 'vikladachi')],
+        [InlineKeyboardButton('Принципи навчання на кафедрі ',callback_data = 'principi')],
+        [InlineKeyboardButton('Історія кафедри ',callback_data = 'istoriyaKafedry')],
+        [InlineKeyboardButton('Аудиторії кафедри',callback_data = 'auditoryua')],
+        [InlineKeyboardButton('Наші випускники',callback_data = 'vipuskniki')]
         ]
     
     reply1 = InlineKeyboardMarkup(kb_kafedra)
