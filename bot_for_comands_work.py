@@ -2,18 +2,6 @@
 # -*- coding: utf-8 -*-
 # This program is dedicated to the public domain under the CC0 license.
 
-"""
-Simple Bot to reply to Telegram messages.
-
-First, a few handler functions are defined. Then, those functions are passed to
-the Dispatcher and registered at their respective places.
-Then, the bot is started and runs until we press Ctrl-C on the command line.
-
-Usage:
-Basic Echobot example, repeats messages.
-Press Ctrl-C on the command line or send a signal to the process to stop the
-bot.
-"""
 import urllib.request
 link = 'https://ulkabo.github.io/content-for-telegtam-bot/data/%D0%94%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%20%D0%BE%D1%81%D0%B2%D1%96%D1%82%D0%B0.txt'
         
@@ -25,6 +13,8 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler,
                           ConversationHandler, CallbackContext )
 import datetime
 #file = open("users.txt", '+')
+import sqlite3
+
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -32,157 +22,153 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
+contents = {'start' : {'text' :['data/start1.txt','data/start2.txt'],
+                       'photo':[],
+                       'next_menu': 
+                          {'kafedra' : {'text' :['data/start_kafedra.txt'],
+                                        'photo': [],
+                                    'next_menu':{ 'vykladachi'  : {'text' : ['data/start_kafedra_vykladachi_with_url.txt'],
+                                                                 'photo': []},
+                                                'vidminnosti' : {'text' : ['data/start_kafedra_vidminnosti.txt'],
+                                                                 'photo': []},
+                                                'istoria'     : {'text' : ['data/sstart_kafedra_istoria.txt'],
+                                                                 'photo': ['data/start_kafedra_istoria_urls_photo.txt']},
+                                                'auditorii'   : {'text' : ['data/start_kafedra_auditorii.txt'],
+                                                                 'photo': ['data/start_kafedra_auditorii_urls_photo.txt']},
+                                                'vypusnyki'   : {'text' : ['data/start_kafedra_vypusnyki_with_url.txt'],
+                                                                 'photo': []},
+                                    }},
+                       'mozhlyvosti' :{'text' : ['data/start_mozhlyvosti.txt'],
+                                       'photo': [],
+                                    'next_menu': {'proektnnavch'   : {'text': ['data/start_mozhlyvosti_proektnnavch_with_ulr.txt'],
+                                                                    'photo':[]},
+                                                'dualosvita'     : {'text': ['data/start_mozhlyvosti_dualoscita.txt'],
+                                                                    'photo':[]},
+                                                'pratsevlashuv'  : {'text': ['data/start_mozhlyvosti_pratsevlashtuv.txt'],
+                                                                    'photo':[]},
+                                                'praktika'       : {'text': ['data/start_mozhlyvosti_praktika.txt'],
+                                                                    'photo':[]},
+                                        }},
+                       'umovy'    : {'text' : ['data/start_umovy.txt'],
+                                       'photo': [],
+                                    'next_menu': {'predmetiZNO'     : {'text': ['data/start_umovy_predmetiZNO.txt'],
+                                                                    'photo':[]},
+                                                'rozrakhunokBalu' : {'text': ['data/start_umovy_rozrakhunokBalu.txt'],
+                                                                    'photo':[]},
+                                                'etapy'           : {'text': ['data/start_umovy_etapy.txt'],
+                                                                    'photo':[]},
+                                                'posylannya'      : {'text': ['data/start_umovy_posylannya_with_url.txt'],
+                                                                    'photo':[]},
+                                                'kilkistMists'    : {'text': ['data/start_umovy_kilkistMists.txt'],
+                                                                    'photo':[]},
+                                      }}
+                     }}
+            }
+def read_content(file):
+    f = open(file, 'r')
+    text = f.read()
+    f.close()
+    return text
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
 def start(update : Update, context : CallbackContext):
+    '''
+    print(1)
     user = update.message.from_user
-    print('-----',user)
-    print('---____--',user.username)
-    print('----_______   -',user.id)
-    print('-________-------     ---',datetime.datetime.now().strftime("%Y %B %d. %A, %I: %M%p") )
     file = open("users.txt", 'a+')
     n = user.first_name +' '
-    n += user.last_name if user.last_name else ''
-    print(n)
-    name = n + ' ' + 'id: ' + str(user.id) + ' ' + datetime.datetime.now().strftime("%Y %B %d. %A, %I: %M%p") + ' ' + str(datetime.datetime.now())
-    print(name)
-    file.write(name + '\n')
-    
-    #print(user.first_name, user.last_name)
-    file.close()
-    """Send a message when the command /start is issued."""
-
-    content = "Привіт! \n\
-                Цей чат-бот допоможе тобі познайомитися з кафедрою ближче.\
-                Ти дізнаєшся про викладачів, спеціальності, додаткові можливості для студентів та умови вступу. \
-                Натискай /start "
-    
-    url_photo = 'https://picsum.photos/id/237/200/300'
-    keyboard = [
-        [InlineKeyboardButton("Викладачі", callback_data = "m11_викладачі")],
-        [InlineKeyboardButton("Про кафедру", callback_data = "m12_кафедра")],
-        [InlineKeyboardButton("для студентів", callback_data = "m13_студенти")]
-        ]
-    reply = InlineKeyboardMarkup(keyboard)
-    #update.message.reply_text(dir(update.message.bot))
-    update.message.reply_text(content)
-    
-    url_photo = "http://web.kpi.kharkov.ua/kmmm/wp-content/uploads/sites/110/2013/09/Slide3.jpg"
-    update.message.bot.send_photo(chat_id = update.message.from_user.id, photo = url_photo)
-    update.message.reply_text("Обери, будь-ласка, теми, які тобі цікаві" , reply_markup = reply )
-    return 'step1'
-    
-def menu11 (update : Update, context : CallbackContext):
-
-    content = "На кафедрі працює 26 викладачів, у тому числі 4 професорів, \
-                                доктори наук, 16 доцентів, кандидати наук."
-    query = update.callback_query
-    query.answer()
-    wU = urllib.request.urlopen(link)
-    a = wU.read()
-    b = a.decode(encoding = 'utf-8')
-    print(a)
-    print(b)
-    content = b
-    kb = [['/start','/end']]
-    reply_kb_markup = ReplyKeyboardMarkup(kb, resize_keyboard = True,
-                                          one_time_keyboard = False)
-    keyboard = [
-        [InlineKeyboardButton("Викладачі", callback_data = "m111_викладачі")],
-        [InlineKeyboardButton("Професори", callback_data = "m112_професора")],
-        [InlineKeyboardButton("доктори наук", callback_data = "m113_доктора")]
-        ]
-    reply = InlineKeyboardMarkup(keyboard)
-    query.message.reply_text(text = 'внизу кнопки', reply_markup =  reply_kb_markup)
-    #update.message.reply_text(text = 'внизу кнопки', reply_markup =  reply_kb_markup)
-    #print(dir(query), dir(query.message))
-    query.message.reply_text(text = content, reply_markup = reply)
-    #query.edit_message_text(text = content, reply_markup = reply)
-    #update.message.reply_text(content, reply_markup = reply )
-    return 'step2'
-
-def menu12 (update : Update, context : CallbackContext):
-    content = "На кафедрі КМАД реалізується пілотний проект по розробці, \
-                                апробації та реалізації інноваційної освітньої системи на \
-                                основі технологій проектного навчання (project based learning), \
-                                навчання за запитами (inquire learning), пірингового навчання P2P \
-                                (peer-to-peer) і геймифікації освітнього процесу в рамках Всесвітньої \
-                                ініціативи реформування інженерної освіти CDIO Iinitiative \
-                                http://www.cdio.org/about. Проект реалізується за підтримки фонду \
-                                Василя Хмельницького K-Fund http://kfund.ua/. \
-                            Кафедра КМАД увійшла до складу ініціативної групи по створенню \
-                            Української асоціації датистики (UkrainianAssociationonDataScience), \
-                               серед завдань якої важливе місце займає створення Української \
-                               освітньої програми в галузі науки про даних (“DataScience”) – один з \
-                               найбільш сучасних напрямів комп’ютерних наук. Програма розробляється на \
-                               основі і за підтримки Європейського проекту EDISON http://edison-project.eu, \
-                               спрямованого на створення професії DataScientist для європейської\
-                               промисловості та прикладних досліджень."
-    query = update.callback_query
-    query.answer()
-    keyboard = [
-        [InlineKeyboardButton("Історія кафедри", callback_data = "m121_історія")],
-        [InlineKeyboardButton("Аудиторії кафедри", callback_data = "m122_аудиторії")],
-        [InlineKeyboardButton("Наші випускники", callback_data = "m123_випускники")]
-        ]
-    reply = InlineKeyboardMarkup(keyboard)
-    #url_photo = "https://i.picsum.photos/id/0/5616/3744.jpg?hmac=3GAAioiQziMGEtLbfrdbcoenXoWAW-zlyEAMkfEdBzQ"
-    url_photo = "https://ulkabo.github.io/content-for-telegtam-bot/data/images/u1.jpg"
-    query.message.reply_text(text = content)
-    #print(update)
-    query.message.bot.send_photo(chat_id = update.callback_query.message.chat.id, photo = url_photo)
-    query.message.reply_text(text = 'Що тобі ще цікаво ?', reply_markup = reply)
-    #query.edit_message_text(text = content, reply_markup = reply)
-    #update.message.reply_text(content, reply_markup = reply )
-    return 'step2'
-
-def menu13 (update : Update, context : CallbackContext):
-    print(1)
-    file = open("data/Дуальна освіта.txt", 'r')
     print(2)
-    content = file.read()
+    n += user.last_name if user.last_name else ''
+    name = n + ' ' + 'id: ' + str(user.id) + ' ' \
+           + datetime.datetime.now().strftime("%Y %B %d. %A, %I: %M%p") \
+           + ' ' + str(datetime.datetime.now())
+    print(3)
+    file.write(name + '\n')
     file.close()
+    print(4)
+    '''
+    content = read_content(contents['start']['text'][0])
+    keyboard = [
+        [InlineKeyboardButton("Кафедра КМАД", callback_data = "kafedra")],
+        [InlineKeyboardButton("Можливості для студентів", callback_data = "mozhlyvosti")],
+        [InlineKeyboardButton("Умови вступу", callback_data = "umovy")]
+        ]
+    reply = InlineKeyboardMarkup(keyboard)
+
+    update.message.reply_text(content, parse_mode = "Markdown")
+    url_photo = "http://web.kpi.kharkov.ua/kmmm/wp-content/uploads/sites/110/2013/09/Slide3.jpg"
+    update.message.reply_photo(url_photo)
+    
+    #update.message.bot.send_photo(chat_id = update.message.from_user.id, photo = url_photo)
+    update.message.reply_text("Обери, будь-ласка, теми, які тобі цікаві" , reply_markup = reply )
+    
+
+def kafedra (update : Update, context : CallbackContext):
+    content = read_content(contents['start']['next_menu']['kafedra']['text'][0])
     query = update.callback_query
     query.answer()
     keyboard = [
-        [InlineKeyboardButton("Викладачі", callback_data = "m111_викладачі")],
-        [InlineKeyboardButton("Професори", callback_data = "m112_професора")],
-        [InlineKeyboardButton("доктори наук", callback_data = "m113_доктора")]
+        [InlineKeyboardButton("Викладачі", callback_data = "vykladachi")],
+        [InlineKeyboardButton("Відмінності кафедри", callback_data = "vidminnosti")],
+        [InlineKeyboardButton("Історія кафедри", callback_data = "istoria")],
+        [InlineKeyboardButton("Аудиторії кафедри", callback_data = "auditorii")],
+        [InlineKeyboardButton("Наші випускники", callback_data = "vypusnyki")]
+        ]
+    reply = InlineKeyboardMarkup(keyboard)
+
+    url_photo = "https://ulkabo.github.io/content-for-telegtam-bot/data/images/u1.jpg"
+
+    query.message.bot.send_photo(chat_id = update.callback_query.message.chat.id, photo = url_photo)
+    query.message.reply_text(text = content, reply_markup = reply)
+
+
+def mozhlyvosti (update : Update, context : CallbackContext):
+    
+    content = read_content(contents['start']['next_menu']['mozhlyvosti']['text'][0])
+    query = update.callback_query
+    query.answer()
+    keyboard = [
+        [InlineKeyboardButton("Проєктне навчання", callback_data = "proektnnavch")],
+        [InlineKeyboardButton("Дуальна освіта", callback_data = "dualosvita")],
+        [InlineKeyboardButton("Працевлаштування", callback_data = "pratsevlashuv")],
+        [InlineKeyboardButton("Практика", callback_data = "praktika")],
         ]
     reply = InlineKeyboardMarkup(keyboard)
     query.message.reply_text(text = content, reply_markup = reply)
-    #query.edit_message_text(text = content, reply_markup = reply)
-    #update.message.reply_text(content, reply_markup = reply )
-    return 'step2'
         
-def menu111 (update : Update, context : CallbackContext):
-    pass
-    return 'step3'
-def menu112 (update : Update, context : CallbackContext):
-    pass
-    return 'step3'
-def menu113 (update : Update, context : CallbackContext):
-    pass
-    return 'step3'
-def menu121 (update : Update, context : CallbackContext):
-    pass
-    return 'step3'
-def menu122 (update : Update, context : CallbackContext):
-    pass
-    return 'step3'
-def menu123 (update : Update, context : CallbackContext):
-    pass
-    return 'step3'
-def menu131 (update : Update, context : CallbackContext):
-    pass
-    return 'step3'
-def menu132 (update : Update, context : CallbackContext):
-    pass
-    return 'step3'
-def menu133 (update : Update, context : CallbackContext):
-    pass
-    return 'step3'
+def umovy (update : Update, context : CallbackContext):
+    
+    content = read_content(contents['start']['next_menu']['umovy']['text'][0])
+    query = update.callback_query
+    query.answer()
+    keyboard = [
+##        [InlineKeyboardButton("Конкурсні предмети ЗНО", callback_data = "predmetiZNO")],
+        [InlineKeyboardButton("Розрахунок конкурсного балу", callback_data = "rozrakhunokBalu")],
+        [InlineKeyboardButton("Етапи вступної кампанії", callback_data = "etapy")],
+        [InlineKeyboardButton("Корисні посилання", callback_data = "posylannya")],
+        [InlineKeyboardButton("Кількість бюджетних та контрактних місць для вступників", callback_data = "kilkistMists")],
+        ]
+    reply = InlineKeyboardMarkup(keyboard)
+    query.message.reply_text(text = content, reply_markup = reply)
+
+def vykladachi (update : Update, context : CallbackContext):
+    
+    content = read_content(contents['start']['next_menu']['kafedra']['next_menu']['vykladachi']['text'][0])
+    query = update.callback_query
+    query.answer()
+    
+    query.message.reply_text(text = content, parse_mode = "Markdown")
+
+def vidminnosti (update : Update, context : CallbackContext):
+    
+    content = read_content(contents['start']['next_menu']['kafedra']['next_menu']['vidminnosti']['text'][0])
+    query = update.callback_query
+    query.answer()
+    
+    query.message.reply_text(text = content, parse_mode = "Markdown")
+
+
     
 def help(update, context):
     """Send a message when the command /help is issued."""
@@ -205,6 +191,7 @@ def error(update, context):
 
 
 def main():
+    
     """Start the bot."""
     
     # Create the Updater and pass it your bot's token.
@@ -216,39 +203,24 @@ def main():
     dp = updater.dispatcher
 
     # on different commands - answer in Telegram
+    dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("end", end))
     dp.add_handler(CommandHandler("help", help))
-
-    # new one
-    
-    conv_handler = ConversationHandler(
-        entry_points = [CommandHandler('start', start)],
-        states = {
-            'step1' : [
-                      CallbackQueryHandler(menu11, pattern = "m11_викладачі"),
-                      CallbackQueryHandler(menu12, pattern = "m12_кафедра"),
-                      CallbackQueryHandler(menu13, pattern = "m13_студенти"),
-                       ],
-            'step2' : [
-                      CallbackQueryHandler(menu111, pattern = "m111_викладачі"),
-                      CallbackQueryHandler(menu112, pattern = "m112_професора"),
-                      CallbackQueryHandler(menu113, pattern = "m113_доктора"),
-                       ],
-            'step2' : [
-                      CallbackQueryHandler(menu121, pattern = "m121_історія"),
-                      CallbackQueryHandler(menu122, pattern = "m122_аудиторії"),
-                      CallbackQueryHandler(menu123, pattern = "m123_випускники"),
-                       ],
-            'step2' : [
-                      CallbackQueryHandler(menu131, pattern = "m131_Проєктне навчання"),
-                      CallbackQueryHandler(menu132, pattern = "m132_Практика"),
-                      CallbackQueryHandler(menu133, pattern = "m133_Працевлаштування"),
-                       ],
-
-                 },
-        fallbacks = [CommandHandler('start', start)],
-        )
-    dp.add_handler(conv_handler)
+    dp.add_handler(CallbackQueryHandler(kafedra, pattern = "kafedra"))
+    dp.add_handler(CallbackQueryHandler(mozhlyvosti, pattern = "mozhlyvosti"))
+    dp.add_handler(CallbackQueryHandler(umovy, pattern = "umovy"))
+    dp.add_handler(CallbackQueryHandler(kafedra, pattern = "kafedra"))
+    dp.add_handler(CallbackQueryHandler(vykladachi, pattern = "vykladachi"))
+    dp.add_handler(CallbackQueryHandler(vidminnosti, pattern = "vidminnosti"))
+    '''dp.add_handler(CallbackQueryHandler(kafedra, pattern = "kafedra"))
+    dp.add_handler(CallbackQueryHandler(kafedra, pattern = "kafedra"))
+    dp.add_handler(CallbackQueryHandler(kafedra, pattern = "kafedra"))
+    dp.add_handler(CallbackQueryHandler(kafedra, pattern = "kafedra"))
+    dp.add_handler(CallbackQueryHandler(kafedra, pattern = "kafedra"))
+    dp.add_handler(CallbackQueryHandler(kafedra, pattern = "kafedra"))
+    dp.add_handler(CallbackQueryHandler(kafedra, pattern = "kafedra"))
+    dp.add_handler(CallbackQueryHandler(kafedra, pattern = "kafedra"))
+    '''
     
     # on noncommand i.e message - echo the message on Telegram
     #dp.add_handler(MessageHandler(Filters.text, echo))
