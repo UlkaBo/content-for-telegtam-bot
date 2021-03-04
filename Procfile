@@ -1,1 +1,1 @@
-worker: python bot_for_comands_work.py
+worker: python bot_KMAD.py
