@@ -64,6 +64,34 @@ contents = {'start': {'text': ['start1.txt', 'start2.txt'],
                                                }}
                        }}
             }
+keyboard_kafedra = [
+    [InlineKeyboardButton("Викладачі", callback_data="vykladachi")],
+    [InlineKeyboardButton("Відмінності кафедри",
+                          callback_data="vidminnosti")],
+    [InlineKeyboardButton("Історія кафедри", callback_data="istoria")],
+    [InlineKeyboardButton("Аудиторії кафедри", callback_data="auditorii")],
+    [InlineKeyboardButton("Наші випускники", callback_data="vypusnyki")]
+]
+keyboard_mozhlyvosti = [
+    [InlineKeyboardButton("Проєктне навчання",
+                          callback_data="proektnnavch")],
+    [InlineKeyboardButton("Дуальна освіта", callback_data="dualosvita")],
+    [InlineKeyboardButton("Працевлаштування",
+                          callback_data="pratsevlashuv")],
+    [InlineKeyboardButton("Практика", callback_data="praktika")],
+]
+keyboard_umovy = [
+    [InlineKeyboardButton("Конкурсні предмети ЗНО",
+                          callback_data="predmetiZNO")],
+    [InlineKeyboardButton("Розрахунок конкурсного балу",
+                          callback_data="rozrakhunokBalu")],
+    [InlineKeyboardButton("Етапи вступної кампанії",
+                          callback_data="etapy")],
+    [InlineKeyboardButton("Корисні посилання",
+                          callback_data="posylannya")],
+    [InlineKeyboardButton(
+        "Кількість бюджетних та контрактних місць для вступників", callback_data="kilkistMists")],
+]
 
 
 def read_content(url_file):
@@ -114,16 +142,8 @@ def kafedra(update: Update, context: CallbackContext):
                            contents['start']['next_menu']['kafedra']['text'][0])
     query = update.callback_query
     query.answer()
-    keyboard = [
-        [InlineKeyboardButton("Викладачі", callback_data="vykladachi")],
-        [InlineKeyboardButton("Відмінності кафедри",
-                              callback_data="vidminnosti")],
-        [InlineKeyboardButton("Історія кафедри", callback_data="istoria")],
-        [InlineKeyboardButton("Аудиторії кафедри", callback_data="auditorii")],
-        [InlineKeyboardButton("Наші випускники", callback_data="vypusnyki")]
-    ]
-    reply = InlineKeyboardMarkup(keyboard)
 
+    reply = InlineKeyboardMarkup(keyboard_kafedra)
     query.message.reply_text(text=content, reply_markup=reply)
 
 
@@ -133,37 +153,19 @@ def mozhlyvosti(update: Update, context: CallbackContext):
                            contents['start']['next_menu']['mozhlyvosti']['text'][0])
     query = update.callback_query
     query.answer()
-    keyboard = [
-        [InlineKeyboardButton("Проєктне навчання",
-                              callback_data="proektnnavch")],
-        [InlineKeyboardButton("Дуальна освіта", callback_data="dualosvita")],
-        [InlineKeyboardButton("Працевлаштування",
-                              callback_data="pratsevlashuv")],
-        [InlineKeyboardButton("Практика", callback_data="praktika")],
-    ]
-    reply = InlineKeyboardMarkup(keyboard)
+
+    reply = InlineKeyboardMarkup(keyboard_mozhlyvosti)
     query.message.reply_text(text=content, reply_markup=reply)
 
 
 def umovy(update: Update, context: CallbackContext):
 
-    content = link + \
-        read_content(contents['start']['next_menu']['umovy']['text'][0])
+    content = read_content(
+        link + contents['start']['next_menu']['umovy']['text'][0])
     query = update.callback_query
     query.answer()
-    keyboard = [
-        [InlineKeyboardButton("Конкурсні предмети ЗНО",
-                              callback_data="predmetiZNO")],
-        [InlineKeyboardButton("Розрахунок конкурсного балу",
-                              callback_data="rozrakhunokBalu")],
-        [InlineKeyboardButton("Етапи вступної кампанії",
-                              callback_data="etapy")],
-        [InlineKeyboardButton("Корисні посилання",
-                              callback_data="posylannya")],
-        [InlineKeyboardButton(
-            "Кількість бюджетних та контрактних місць для вступників", callback_data="kilkistMists")],
-    ]
-    reply = InlineKeyboardMarkup(keyboard)
+
+    reply = InlineKeyboardMarkup(keyboard_umovy)
     query.message.reply_text(text=content, reply_markup=reply)
 
 
@@ -176,7 +178,9 @@ def vykladachi(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_kafedra)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 
 def vidminnosti(update: Update, context: CallbackContext):
@@ -186,7 +190,9 @@ def vidminnosti(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_kafedra)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 
 def istoria(update: Update, context: CallbackContext):
@@ -196,7 +202,9 @@ def istoria(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_kafedra)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 
 def auditorii(update: Update, context: CallbackContext):
@@ -206,7 +214,9 @@ def auditorii(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_kafedra)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 
 def vypusnyki(update: Update, context: CallbackContext):
@@ -216,7 +226,9 @@ def vypusnyki(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_kafedra)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 # -------------------------------**  end block kafedra  **----------------------------
 
@@ -230,7 +242,9 @@ def proektnnavch(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_mozhlyvosti)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 
 def dualosvita(update: Update, context: CallbackContext):
@@ -240,7 +254,9 @@ def dualosvita(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_mozhlyvosti)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 
 def pratsevlashuv(update: Update, context: CallbackContext):
@@ -250,7 +266,9 @@ def pratsevlashuv(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_mozhlyvosti)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 
 def praktika(update: Update, context: CallbackContext):
@@ -260,7 +278,9 @@ def praktika(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_mozhlyvosti)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 # -------------------------------**   end block mozhlyvosti  **----------------------------
 
@@ -274,7 +294,9 @@ def predmetiZNO(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_umovy)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 
 def rozrakhunokBalu(update: Update, context: CallbackContext):
@@ -284,7 +306,9 @@ def rozrakhunokBalu(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_umovy)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 
 def etapy(update: Update, context: CallbackContext):
@@ -294,7 +318,9 @@ def etapy(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_umovy)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 
 def posylannya(update: Update, context: CallbackContext):
@@ -304,7 +330,9 @@ def posylannya(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_umovy)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 
 def kilkistMists(update: Update, context: CallbackContext):
@@ -314,7 +342,9 @@ def kilkistMists(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    query.message.reply_text(text=content, parse_mode="Markdown")
+    reply = InlineKeyboardMarkup(keyboard_umovy)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
 
 # -------------------------------**   end block umovy  **----------------------------
 
