@@ -66,10 +66,12 @@ contents = {'start': {'text': ['start1.txt', 'start2.txt'],
             }
 
 
-def read_content(file):
-    f = open(file, 'r')
-    text = f.read()
-    f.close()
+def read_content(url_file):
+    #f = open(file, 'r')
+    wU = urllib.request.urlopen(url_file)
+    text = wU.read().decode(encoding='utf-8')
+    #text = f.read()
+    # f.close()
     return text
 
 
@@ -89,7 +91,9 @@ def start(update: Update, context: CallbackContext):
     file.close()
     print(4)
     '''
-    content = read_content(contents['start']['text'][0])
+    print(link + contents['start']['text'][0])
+    content = read_content(link + contents['start']['text'][0])
+    print(content)
     keyboard = [
         [InlineKeyboardButton("Кафедра КМАД", callback_data="kafedra")],
         [InlineKeyboardButton("Можливості для студентів",
@@ -101,13 +105,13 @@ def start(update: Update, context: CallbackContext):
     update.message.reply_text(content, parse_mode="Markdown")
     url_photo = "http://web.kpi.kharkov.ua/kmmm/wp-content/uploads/sites/110/2013/09/Slide3.jpg"
     update.message.reply_photo(url_photo)
-    content = read_content(contents['start']['text'][1])
+    content = read_content(link + contents['start']['text'][1])
     update.message.reply_text(content, reply_markup=reply)
 
 
 def kafedra(update: Update, context: CallbackContext):
-    content = read_content(
-        contents['start']['next_menu']['kafedra']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['kafedra']['text'][0])
     query = update.callback_query
     query.answer()
     keyboard = [
@@ -125,8 +129,8 @@ def kafedra(update: Update, context: CallbackContext):
 
 def mozhlyvosti(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['mozhlyvosti']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['mozhlyvosti']['text'][0])
     query = update.callback_query
     query.answer()
     keyboard = [
@@ -143,7 +147,8 @@ def mozhlyvosti(update: Update, context: CallbackContext):
 
 def umovy(update: Update, context: CallbackContext):
 
-    content = read_content(contents['start']['next_menu']['umovy']['text'][0])
+    content = link + \
+        read_content(contents['start']['next_menu']['umovy']['text'][0])
     query = update.callback_query
     query.answer()
     keyboard = [
@@ -166,8 +171,8 @@ def umovy(update: Update, context: CallbackContext):
 
 def vykladachi(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['kafedra']['next_menu']['vykladachi']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['kafedra']['next_menu']['vykladachi']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -176,8 +181,8 @@ def vykladachi(update: Update, context: CallbackContext):
 
 def vidminnosti(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['kafedra']['next_menu']['vidminnosti']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['kafedra']['next_menu']['vidminnosti']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -186,8 +191,8 @@ def vidminnosti(update: Update, context: CallbackContext):
 
 def istoria(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['kafedra']['next_menu']['istoria']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['kafedra']['next_menu']['istoria']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -196,8 +201,8 @@ def istoria(update: Update, context: CallbackContext):
 
 def auditorii(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['kafedra']['next_menu']['auditorii']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['kafedra']['next_menu']['auditorii']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -206,8 +211,8 @@ def auditorii(update: Update, context: CallbackContext):
 
 def vypusnyki(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['kafedra']['next_menu']['vypusnyki']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['kafedra']['next_menu']['vypusnyki']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -220,8 +225,8 @@ def vypusnyki(update: Update, context: CallbackContext):
 
 def proektnnavch(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['mozhlyvosti']['next_menu']['proektnnavch']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['mozhlyvosti']['next_menu']['proektnnavch']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -230,8 +235,8 @@ def proektnnavch(update: Update, context: CallbackContext):
 
 def dualosvita(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['mozhlyvosti']['next_menu']['dualosvita']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['mozhlyvosti']['next_menu']['dualosvita']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -240,8 +245,8 @@ def dualosvita(update: Update, context: CallbackContext):
 
 def pratsevlashuv(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['mozhlyvosti']['next_menu']['pratsevlashuv']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['mozhlyvosti']['next_menu']['pratsevlashuv']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -250,8 +255,8 @@ def pratsevlashuv(update: Update, context: CallbackContext):
 
 def praktika(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['mozhlyvosti']['next_menu']['praktika']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['mozhlyvosti']['next_menu']['praktika']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -264,8 +269,8 @@ def praktika(update: Update, context: CallbackContext):
 
 def predmetiZNO(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['umovy']['next_menu']['predmetiZNO']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['umovy']['next_menu']['predmetiZNO']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -274,8 +279,8 @@ def predmetiZNO(update: Update, context: CallbackContext):
 
 def rozrakhunokBalu(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['umovy']['next_menu']['rozrakhunokBalu']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['umovy']['next_menu']['rozrakhunokBalu']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -284,8 +289,8 @@ def rozrakhunokBalu(update: Update, context: CallbackContext):
 
 def etapy(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['umovy']['next_menu']['etapy']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['umovy']['next_menu']['etapy']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -294,8 +299,8 @@ def etapy(update: Update, context: CallbackContext):
 
 def posylannya(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['umovy']['next_menu']['posylannya']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['umovy']['next_menu']['posylannya']['text'][0])
     query = update.callback_query
     query.answer()
 
@@ -304,8 +309,8 @@ def posylannya(update: Update, context: CallbackContext):
 
 def kilkistMists(update: Update, context: CallbackContext):
 
-    content = read_content(
-        contents['start']['next_menu']['umovy']['next_menu']['kilkistMists']['text'][0])
+    content = read_content(link +
+                           contents['start']['next_menu']['umovy']['next_menu']['kilkistMists']['text'][0])
     query = update.callback_query
     query.answer()
 
