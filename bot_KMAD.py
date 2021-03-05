@@ -2,14 +2,16 @@
 # -*- coding: utf-8 -*-
 # This program is dedicated to the public domain under the CC0 license.
 
-import datetime
+import urllib.request
+import logging
 from telegram.ext import (Updater, CommandHandler, MessageHandler,
                           Filters, CallbackQueryHandler,
                           ConversationHandler, CallbackContext)
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
 from telegram import Update, Bot
-import logging
-import urllib.request
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
+import datetime
+TOKEN = "1622026876:AAGSPO1cWixVtEb0Zw8PKJxNa-KfQUh7818"
+
 link = 'https://ulkabo.github.io/content-for-telegtam-bot/data/'
 
 #file = open("users.txt", '+')
@@ -64,6 +66,13 @@ contents = {'start': {'text': ['start1.txt', 'start2.txt'],
                                                }}
                        }}
             }
+keyboard_start = [[KeyboardButton("Кафедра КМАД"),
+                   KeyboardButton("Можливості для студентів"),
+                   KeyboardButton("Умови вступу")]]
+
+reply_kb_markup = ReplyKeyboardMarkup(keyboard_start, resize_keyboard=True,
+                                      one_time_keyboard=False)
+
 keyboard_kafedra = [
     [InlineKeyboardButton("Викладачі", callback_data="vykladachi")],
     [InlineKeyboardButton("Відмінності кафедри",
@@ -130,11 +139,33 @@ def start(update: Update, context: CallbackContext):
     ]
     reply = InlineKeyboardMarkup(keyboard)
 
-    update.message.reply_text(content, parse_mode="Markdown")
+    update.message.reply_text(
+        content, reply_markup=reply_kb_markup, parse_mode="Markdown")
     url_photo = "http://web.kpi.kharkov.ua/kmmm/wp-content/uploads/sites/110/2013/09/Slide3.jpg"
     update.message.reply_photo(url_photo)
     content = read_content(link + contents['start']['text'][1])
     update.message.reply_text(content, reply_markup=reply)
+
+
+def kafedra_m(update: Update, context: CallbackContext):
+    content = read_content(link +
+                           contents['start']['next_menu']['kafedra']['text'][0])
+    reply = InlineKeyboardMarkup(keyboard_kafedra)
+    update.message.reply_text(text=content, reply_markup=reply)
+
+
+def mozhlyvosti_m(update: Update, context: CallbackContext):
+    content = read_content(link +
+                           contents['start']['next_menu']['mozhlyvosti']['text'][0])
+    reply = InlineKeyboardMarkup(keyboard_mozhlyvosti)
+    update.message.reply_text(text=content, reply_markup=reply)
+
+
+def umovy_m(update: Update, context: CallbackContext):
+    content = read_content(
+        link + contents['start']['next_menu']['umovy']['text'][0])
+    reply = InlineKeyboardMarkup(keyboard_umovy)
+    update.message.reply_text(text=content, reply_markup=reply)
 
 
 def kafedra(update: Update, context: CallbackContext):
@@ -359,14 +390,19 @@ def main():
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
-    updater = Updater(
-        "1622026876:AAGSPO1cWixVtEb0Zw8PKJxNa-KfQUh7818", use_context=True)
+    updater = Updater(TOKEN, use_context=True)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
+    #"Кафедра КМАД", "Можливості для студентів", "Умови вступу"
+    dp.add_handler(MessageHandler(Filters.regex('^Кафедра КМАД$'), kafedra_m))
+    dp.add_handler(MessageHandler(Filters.regex(
+        '^Можливості для студентів$'), mozhlyvosti_m))
+    dp.add_handler(MessageHandler(Filters.regex('^Умови вступу$'), umovy_m))
+
     dp.add_handler(CallbackQueryHandler(kafedra, pattern="kafedra"))
     dp.add_handler(CallbackQueryHandler(mozhlyvosti, pattern="mozhlyvosti"))
     dp.add_handler(CallbackQueryHandler(umovy, pattern="umovy"))
