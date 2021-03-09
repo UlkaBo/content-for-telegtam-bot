@@ -230,6 +230,18 @@ def vykladachi(update: Update, context: CallbackContext):
 def vidminnosti(update: Update, context: CallbackContext):
 
     content = read_content(link +
+                           contents['start']['next_menu']['kafedra']['next_menu']['vidminnosti']['text'][0])
+    query = update.callback_query
+    query.answer()
+
+    reply = InlineKeyboardMarkup(keyboard_backto_kafedra)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
+
+
+def istoria(update: Update, context: CallbackContext):
+
+    content = read_content(link +
                            contents['start']['next_menu']['kafedra']['next_menu']['istoria']['text'][0])
     content_lines = content.split('\n')
     photos = read_content(link +
@@ -244,17 +256,16 @@ def vidminnosti(update: Update, context: CallbackContext):
     step = len(content_lines) // len(photos)
     print(len(content_lines), len(photos), step)
 
-
-def istoria(update: Update, context: CallbackContext):
-
-    content = read_content(link +
-                           contents['start']['next_menu']['kafedra']['next_menu']['istoria']['text'][0])
-    query = update.callback_query
-    query.answer()
-
-    reply = InlineKeyboardMarkup(keyboard_backto_kafedra)
+    for i in range(len(photos)):
+        print('b', i)
+        query.message.reply_text(text='\n'.join(
+            content_lines[i*step:(i+1)*step]), parse_mode="Markdown")
+        print('m', i//step)
+        query.message.reply_photo(link + photos[i])
+        print('e', i)
+        print('\n'.join(content_lines[i*step:]))
     query.message.reply_text(
-        text=content, reply_markup=reply, parse_mode="Markdown")
+        text='\n'.join(content_lines[i*step:]), reply_markup=reply, parse_mode="Markdown")
 
 
 def auditorii(update: Update, context: CallbackContext):
