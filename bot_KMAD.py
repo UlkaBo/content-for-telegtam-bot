@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # This program is dedicated to the public domain under the CC0 license.
-
 import urllib.request
 import logging
 from telegram.ext import (Updater, CommandHandler, MessageHandler,
@@ -10,7 +9,7 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler,
 from telegram import Update, Bot
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
 import datetime
-TOKEN = "1622026876:AAGSPO1cWixVtEb0Zw8PKJxNa-KfQUh7818"
+TOKEN = '1622026876:AAGSPO1cWixVtEb0Zw8PKJxNa-KfQUh7818'
 
 link = 'https://ulkabo.github.io/content-for-telegtam-bot/data/'
 
@@ -101,14 +100,24 @@ keyboard_umovy = [
     [InlineKeyboardButton(
         "Кількість бюджетних та \nконтрактних місць для вступників", callback_data="kilkistMists")],
 ]
+keyboard_backto_kafedra = [
+    [InlineKeyboardButton("Назад",
+                          callback_data="kafedra")]]
+keyboard_backto_mozhlyvosti = [
+    [InlineKeyboardButton("Назад",
+                          callback_data="mozhlyvosti")]]
+keyboard_backto_umovy = [
+    [InlineKeyboardButton("Назад",
+                          callback_data="umovy")]]
 
 
 def read_content(url_file):
     #f = open(file, 'r')
-    wU = urllib.request.urlopen(url_file)
-    text = wU.read().decode(encoding='utf-8')
     #text = f.read()
     # f.close()
+    wU = urllib.request.urlopen(url_file)
+    text = wU.read().decode(encoding='utf-8')
+
     return text
 
 
@@ -209,7 +218,7 @@ def vykladachi(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_kafedra)
+    reply = InlineKeyboardMarkup(keyboard_backto_kafedra)
     query.message.reply_text(
         text=content, reply_markup=reply, parse_mode="Markdown")
 
@@ -221,7 +230,7 @@ def vidminnosti(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_kafedra)
+    reply = InlineKeyboardMarkup(keyboard_backto_kafedra)
     query.message.reply_text(
         text=content, reply_markup=reply, parse_mode="Markdown")
 
@@ -233,7 +242,7 @@ def istoria(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_kafedra)
+    reply = InlineKeyboardMarkup(keyboard_backto_kafedra)
     query.message.reply_text(
         text=content, reply_markup=reply, parse_mode="Markdown")
 
@@ -245,7 +254,7 @@ def auditorii(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_kafedra)
+    reply = InlineKeyboardMarkup(keyboard_backto_kafedra)
     query.message.reply_text(
         text=content, reply_markup=reply, parse_mode="Markdown")
 
@@ -257,7 +266,7 @@ def vypusnyki(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_kafedra)
+    reply = InlineKeyboardMarkup(keyboard_backto_kafedra)
     query.message.reply_text(
         text=content, reply_markup=reply, parse_mode="Markdown")
 
@@ -273,7 +282,7 @@ def proektnnavch(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_mozhlyvosti)
+    reply = InlineKeyboardMarkup(keyboard_backto_mozhlyvosti)
     query.message.reply_text(text=content, parse_mode="Markdown")
     query.message.reply_text(text="Що ще Вас цікавить ? ", reply_markup=reply)
 
@@ -285,7 +294,7 @@ def dualosvita(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_mozhlyvosti)
+    reply = InlineKeyboardMarkup(keyboard_backto_mozhlyvosti)
     query.message.reply_text(text=content, parse_mode="Markdown")
     query.message.reply_text(text="Що ще Вас цікавить ? ", reply_markup=reply)
 
@@ -297,7 +306,7 @@ def pratsevlashuv(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_mozhlyvosti)
+    reply = InlineKeyboardMarkup(keyboard_backto_mozhlyvosti)
     query.message.reply_text(text=content, parse_mode="Markdown")
     query.message.reply_text(text="Що ще Вас цікавить ? ", reply_markup=reply)
 
@@ -309,7 +318,7 @@ def praktika(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_mozhlyvosti)
+    reply = InlineKeyboardMarkup(keyboard_backto_mozhlyvosti)
     query.message.reply_text(text=content, parse_mode="Markdown")
     query.message.reply_text(text="Що ще Вас цікавить ? ", reply_markup=reply)
 # -------------------------------**   end block mozhlyvosti  **----------------------------
@@ -324,7 +333,7 @@ def predmetiZNO(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_umovy)
+    reply = InlineKeyboardMarkup(keyboard_backto_umovy)
     query.message.reply_text(
         text=content, reply_markup=reply, parse_mode="Markdown")
 
@@ -336,7 +345,7 @@ def rozrakhunokBalu(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_umovy)
+    reply = InlineKeyboardMarkup(keyboard_backto_umovy)
     query.message.reply_text(
         text=content, reply_markup=reply, parse_mode="Markdown")
 
@@ -348,7 +357,7 @@ def etapy(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_umovy)
+    reply = InlineKeyboardMarkup(keyboard_backto_umovy)
     query.message.reply_text(
         text=content, reply_markup=reply, parse_mode="Markdown")
 
@@ -360,7 +369,7 @@ def posylannya(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_umovy)
+    reply = InlineKeyboardMarkup(keyboard_backto_umovy)
     query.message.reply_text(
         text=content, reply_markup=reply, parse_mode="Markdown")
 
@@ -372,7 +381,7 @@ def kilkistMists(update: Update, context: CallbackContext):
     query = update.callback_query
     query.answer()
 
-    reply = InlineKeyboardMarkup(keyboard_umovy)
+    reply = InlineKeyboardMarkup(keyboard_backto_umovy)
     query.message.reply_text(
         text=content, reply_markup=reply, parse_mode="Markdown")
 
