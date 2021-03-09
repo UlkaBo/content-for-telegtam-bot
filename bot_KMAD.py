@@ -65,10 +65,12 @@ contents = {'start': {'text': ['start1.txt', 'start2.txt'],
                                                }}
                        }}
             }
+'''
 keyboard_start = [[KeyboardButton("Кафедра КМАД"),
                    KeyboardButton("Можливості для студентів"),
                    KeyboardButton("Умови вступу")]]
-
+'''
+keyboard_start = [[KeyboardButton("НА ПОЧАТОК")]]
 reply_kb_markup = ReplyKeyboardMarkup(keyboard_start, resize_keyboard=True,
                                       one_time_keyboard=False)
 
@@ -411,6 +413,7 @@ def main():
     dp.add_handler(MessageHandler(Filters.regex(
         '^Можливості для студентів$'), mozhlyvosti_m))
     dp.add_handler(MessageHandler(Filters.regex('^Умови вступу$'), umovy_m))
+    dp.add_handler(MessageHandler(Filters.regex('^НА ПОЧАТОК$'), start))
 
     dp.add_handler(CallbackQueryHandler(kafedra, pattern="kafedra"))
     dp.add_handler(CallbackQueryHandler(mozhlyvosti, pattern="mozhlyvosti"))
