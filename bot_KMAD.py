@@ -230,13 +230,19 @@ def vykladachi(update: Update, context: CallbackContext):
 def vidminnosti(update: Update, context: CallbackContext):
 
     content = read_content(link +
-                           contents['start']['next_menu']['kafedra']['next_menu']['vidminnosti']['text'][0])
+                           contents['start']['next_menu']['kafedra']['next_menu']['istoria']['text'][0])
+    content_lines = content.split('\n')
+    photos = read_content(link +
+                          contents['start']['next_menu']['kafedra']['next_menu']['istoria']['photo'][0])
+    print(photos)
+    photos = photos.split('\n')
+    print(photos)
     query = update.callback_query
     query.answer()
 
     reply = InlineKeyboardMarkup(keyboard_backto_kafedra)
-    query.message.reply_text(
-        text=content, reply_markup=reply, parse_mode="Markdown")
+    step = len(content_lines) // len(photos)
+    print(len(content_lines), len(photos), step)
 
 
 def istoria(update: Update, context: CallbackContext):
@@ -261,7 +267,6 @@ def auditorii(update: Update, context: CallbackContext):
     photos = photos.split('\n')
     query = update.callback_query
     query.answer()
-    print(len(content_lines))
     reply = InlineKeyboardMarkup(keyboard_backto_kafedra)
     query.message.reply_text(text='\n'.join(
         content_lines[0:1]), parse_mode="Markdown")
@@ -281,13 +286,19 @@ def vypusnyki(update: Update, context: CallbackContext):
 
     content = read_content(link +
                            contents['start']['next_menu']['kafedra']['next_menu']['vypusnyki']['text'][0])
+    content_lines = content.split('\n')
+    photos = read_content(link +
+                          contents['start']['next_menu']['kafedra']['next_menu']['vypusnyki']['photo'][0])
+    photos = photos.split('\n')
     query = update.callback_query
     query.answer()
-
     reply = InlineKeyboardMarkup(keyboard_backto_kafedra)
+    print(reply)
+    query.message.reply_text(text='\n'.join(
+        content_lines[:13]), parse_mode="Markdown")
+    query.message.reply_photo(link + photos[0])
     query.message.reply_text(
-        text=content, reply_markup=reply, parse_mode="Markdown")
-
+        text='\n'.join(content_lines[13:]), reply_markup=reply, parse_mode="Markdown")
 # -------------------------------**  end block kafedra  **----------------------------
 
 
