@@ -158,6 +158,7 @@ def start(update: Update, context: CallbackContext):
     update.message.reply_text(content, reply_markup=reply)
 
 
+'''
 def kafedra_m(update: Update, context: CallbackContext):
     content = read_content(link +
                            contents['start']['next_menu']['kafedra']['text'][0])
@@ -177,6 +178,7 @@ def umovy_m(update: Update, context: CallbackContext):
         link + contents['start']['next_menu']['umovy']['text'][0])
     reply = InlineKeyboardMarkup(keyboard_umovy)
     update.message.reply_text(text=content, reply_markup=reply)
+'''
 
 
 def kafedra(update: Update, context: CallbackContext):
@@ -253,12 +255,26 @@ def auditorii(update: Update, context: CallbackContext):
 
     content = read_content(link +
                            contents['start']['next_menu']['kafedra']['next_menu']['auditorii']['text'][0])
+    content_lines = content.split('\n')
+    photos = read_content(link +
+                          contents['start']['next_menu']['kafedra']['next_menu']['auditorii']['photo'][0])
+    photos = photos.split('\n')
     query = update.callback_query
     query.answer()
-
+    print(len(content_lines))
     reply = InlineKeyboardMarkup(keyboard_backto_kafedra)
+    query.message.reply_text(text='\n'.join(
+        content_lines[0:1]), parse_mode="Markdown")
+    query.message.reply_photo(link + photos[0])
+    query.message.reply_text(text='\n'.join(
+        content_lines[2:7]), parse_mode="Markdown")
+    query.message.reply_photo(link + photos[1])
+    query.message.reply_photo(link + photos[2])
+    query.message.reply_text(text='\n'.join(
+        content_lines[7:8]), parse_mode="Markdown")
+    query.message.reply_photo(link + photos[3])
     query.message.reply_text(
-        text=content, reply_markup=reply, parse_mode="Markdown")
+        text='\n'.join(content_lines[8:]), reply_markup=reply, parse_mode="Markdown")
 
 
 def vypusnyki(update: Update, context: CallbackContext):
@@ -412,11 +428,13 @@ def main():
 
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
+    '''
     #"Кафедра КМАД", "Можливості для студентів", "Умови вступу"
     dp.add_handler(MessageHandler(Filters.regex('^Кафедра КМАД$'), kafedra_m))
     dp.add_handler(MessageHandler(Filters.regex(
         '^Можливості для студентів$'), mozhlyvosti_m))
     dp.add_handler(MessageHandler(Filters.regex('^Умови вступу$'), umovy_m))
+    '''
     dp.add_handler(MessageHandler(Filters.regex('^НА ПОЧАТОК$'), start))
 
     dp.add_handler(CallbackQueryHandler(kafedra, pattern="kafedra"))
