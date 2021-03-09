@@ -285,8 +285,9 @@ def proektnnavch(update: Update, context: CallbackContext):
     query.answer()
 
     reply = InlineKeyboardMarkup(keyboard_backto_mozhlyvosti)
-    query.message.reply_text(text=content, parse_mode="Markdown")
-    query.message.reply_text(text="Що ще Вас цікавить ? ", reply_markup=reply)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
+    #query.message.reply_text(text="Що ще Вас цікавить ? ", reply_markup=reply)
 
 
 def dualosvita(update: Update, context: CallbackContext):
@@ -297,8 +298,9 @@ def dualosvita(update: Update, context: CallbackContext):
     query.answer()
 
     reply = InlineKeyboardMarkup(keyboard_backto_mozhlyvosti)
-    query.message.reply_text(text=content, parse_mode="Markdown")
-    query.message.reply_text(text="Що ще Вас цікавить ? ", reply_markup=reply)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
+    #query.message.reply_text(text="Що ще Вас цікавить ? ", reply_markup=reply)
 
 
 def pratsevlashuv(update: Update, context: CallbackContext):
@@ -309,8 +311,9 @@ def pratsevlashuv(update: Update, context: CallbackContext):
     query.answer()
 
     reply = InlineKeyboardMarkup(keyboard_backto_mozhlyvosti)
-    query.message.reply_text(text=content, parse_mode="Markdown")
-    query.message.reply_text(text="Що ще Вас цікавить ? ", reply_markup=reply)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
+    #query.message.reply_text(text="Що ще Вас цікавить ? ", reply_markup=reply)
 
 
 def praktika(update: Update, context: CallbackContext):
@@ -321,8 +324,9 @@ def praktika(update: Update, context: CallbackContext):
     query.answer()
 
     reply = InlineKeyboardMarkup(keyboard_backto_mozhlyvosti)
-    query.message.reply_text(text=content, parse_mode="Markdown")
-    query.message.reply_text(text="Що ще Вас цікавить ? ", reply_markup=reply)
+    query.message.reply_text(
+        text=content, reply_markup=reply, parse_mode="Markdown")
+    #query.message.reply_text(text="Що ще Вас цікавить ? ", reply_markup=reply)
 # -------------------------------**   end block mozhlyvosti  **----------------------------
 
 
